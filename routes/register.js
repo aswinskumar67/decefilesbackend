@@ -39,6 +39,11 @@ router.post('/',async (req,res)=>{
 });
 
 router.post('/login',async (req,res) =>{
+   
+    
+
+   
+    console.log(req.body.email)
     const user = await User.findOne({email : req.body.email});
     if(!user) return res.status(400).send("Email or password is wrong");
     const ethaddExists = await User.findOne({ethadd : req.body.ethadd});
@@ -49,9 +54,11 @@ router.post('/login',async (req,res) =>{
     if(!validPassword) return res.status(400).send("Email or password wrong");
 
     //create and assign a token
+    console.log(user);
     const token = jwt.sign({ethadd : user.ethadd},process.env.TOKEN);
-    res.cookie("token", token).send(token);
-    res.end;
+    res.status(200);
+    res.cookie("token",token).send(token);
+    
    
 });
 

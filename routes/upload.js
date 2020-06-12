@@ -6,10 +6,11 @@ const Files = require('../models/files');
 
 router.post('/',(req,res)=>{
     console.log(req.body);
+    const price = req.body.price * Math.pow(10,18)
     const file = new Files({
          name : req.body.name ,
         desc : req.body.desc,
-        price :req.body.price,
+        price :price,
         hash :req.body.hash,
         owner:req.body.owner
 
