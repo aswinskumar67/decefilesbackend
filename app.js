@@ -9,7 +9,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use((req,res,next) => {
-    res.header('Access-Control-Allow-Origin','http://localhost:3000')
+    res.header('Access-Control-Allow-Origin','https://localhost:3000')
      // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
     res.header('Access-Control-Allow-Headers','Content-Type')
@@ -21,11 +21,12 @@ app.use(morgan('dev'))
 /*app.use(session ({secret: process.env.TOKEN,
 resave: false,
 saveUninitialized: true}) )  */
-
+const port = 443;
 //routes import
 const authRoute = require('./routes/auth.js');
 
 const myfilesRoute = require('./routes/myfiles');
+
 
 app.use('/myfiles',myfilesRoute);
 
@@ -33,11 +34,10 @@ app.use('/myfiles',myfilesRoute);
 //middleware
 app.get('/',(req,res) => {
     res.header()
+    res.send("hello")
 
 });
 app.use('/user',authRoute);
-
-
 
 
 
@@ -48,4 +48,19 @@ mongoose.connect(process.env.DB_CONNECT ,
 )
 
 //LISTEN on port 3000
-app.listen(8080);
+
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
+var privateKey  = fs.readFileSync('bin/56327335_localhost.key', 'utf8');
+var certificate = fs.readFileSync('bin/56327335_localhost.cert', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
+
+// your express configuration here
+
+var httpServer = http.createServer(app);
+var secureServer = https.createServer(credentials, app);
+
+
+secureServer.listen(8080);
