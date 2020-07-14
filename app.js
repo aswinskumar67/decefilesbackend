@@ -21,7 +21,6 @@ app.use(morgan('dev'))
 /*app.use(session ({secret: process.env.TOKEN,
 resave: false,
 saveUninitialized: true}) )  */
-const port = 443;
 //routes import
 const authRoute = require('./routes/auth.js');
 

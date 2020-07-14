@@ -12,7 +12,8 @@ router.post('/',(req,res)=>{
         desc : req.body.desc,
         price :price,
         hash :req.body.hash,
-        owner:req.body.owner
+        owner:req.body.owner,
+        fileext : req.body.fileext
 
     });
     file.save()

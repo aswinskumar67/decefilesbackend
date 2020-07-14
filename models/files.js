@@ -22,6 +22,10 @@ const fileSchema = mongoose.Schema({
     owner: {
         type: String,
         required:true,
+    },
+    fileext:{
+        type:String,
+        required:true
     }
 
 });

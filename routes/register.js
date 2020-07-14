@@ -46,8 +46,7 @@ router.post('/login',async (req,res) =>{
     console.log(req.body.email)
     const user = await User.findOne({email : req.body.email});
     if(!user) return res.status(400).send("Email or password is wrong");
-    const ethaddExists = await User.findOne({ethadd : req.body.ethadd});
-    if(!ethaddExists) return res.status(400).send("Ethereum Address does no Exist");
+    if(req.body.ethadd !== user.ethadd) return res.status(400).send("Ethereum Address does no Exist");
 
     //passwordiscorrect
     const validPassword = await bcrypt.compare(req.body.pass,user.pass);
